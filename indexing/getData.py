@@ -1,10 +1,16 @@
 import datetime
 import csv
+import os
 from pymongo.mongo_client import MongoClient
 from pymongo.server_api import ServerApi
 from pymongo import MongoClient
+from dotenv import load_dotenv
 
-uri = "mongodb+srv://ir-project:YM9p8dKEZehONP54@cluster0.rslnzkm.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
+# Load environment variables from .env file
+load_dotenv()
+
+# Retrieve the URI from the environment
+uri = os.getenv("MONGO_URI")
 client = MongoClient(uri, server_api=ServerApi('1'))
 
 
