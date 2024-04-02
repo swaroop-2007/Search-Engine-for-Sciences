@@ -44,7 +44,6 @@ def pageRank(data):
 
 
 
-
 def readData(fileName):
 
     data = pd.read_csv(fileName)

@@ -99,6 +99,7 @@ def tokenization(data):
 
         add_document_info(doc_id, doc_len, len(all_lemma_frequency), max_tf, len(unique_lemma))
 
+        return indexes, document_info
 
 read_data(file_name='sample_webpage.csv')
 
