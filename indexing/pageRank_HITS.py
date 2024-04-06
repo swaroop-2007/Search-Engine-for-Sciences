@@ -25,7 +25,7 @@ def HITS(data):
     graph = nx.DiGraph()
     rows = data.shape[0]
     for i in range(0,rows):
-        graph.add_edges_from([(data["SourceLink"][i],data["Link"][i])])
+        graph.add_edges_from([(data["source"][i],data["url"][i])])
     hubs, authorities = nx.hits(graph, max_iter=10000, tol = 1e-04, normalized=True)
     print("Hub Scores: ", hubs)
     print("Authority Scores: ", authorities)
