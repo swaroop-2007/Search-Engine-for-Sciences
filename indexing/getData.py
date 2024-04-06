@@ -21,10 +21,10 @@ def connect_read_data():
     try:
         client.admin.command('ping')
         db = client.science_search_engine
-        collection = db.sample_webpages
+        collection = db.docs_v1
 
         documents = collection.find({})
-        csv_file = "sample_webpage.csv"
+        csv_file = "docs_v1.csv"
 
         with open(csv_file, mode='w', newline='', encoding='utf-8') as file:
             writer = csv.DictWriter(file, fieldnames=field_names)

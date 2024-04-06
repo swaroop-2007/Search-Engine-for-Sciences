@@ -40,9 +40,8 @@ def add_document_info(doc_id, doc_len,tf, max_tf, unique):
     document_info[doc_id] = (doc_len,tf,max_tf, unique)
 
 
-
 # calculat freq of token in document
-def freq_calculator(tokens, document_id):
+def freq_calculator(tokens):
     frequency={}
     for token in tokens:
         if token in frequency:
@@ -56,7 +55,9 @@ def most_freq_lemma_in_doc(frequency):
     return max(frequency.values())
 
 def read_data(file_name):
+    print("Reading data from ", file_name)
     data = pd.read_csv(file_name)
+    print("Done reading data from ", file_name)
     return data
 
 
@@ -65,7 +66,7 @@ def tokenization(data):
     rows = data.shape[0]
 
     for doc_id in range(0, rows):
-        tokens = ()
+        tokens = list()
         
         title_tokens = word_tokenize(data["title"][doc_id])
         for token in title_tokens:
@@ -78,7 +79,7 @@ def tokenization(data):
                 tokens.append(token)
 
         # Remove stopwords, punctuation...
-        tokens = [token for token in tokens if token not in stopwords]
+        tokens = [token for token in tokens if token not in englist_stopwords]
         tokens = [token for token in tokens if token not in punctuation]
 
         # Stemming
@@ -101,7 +102,11 @@ def tokenization(data):
 
         return indexes, document_info
 
-read_data(file_name='sample_webpage.csv')
+file_name='docs_v1.csv'
+data = read_data(file_name)
+tokenization(data)
+
+print("Finised tokenization for file: ",file_name )
 
 
 with open('pickelFiles/document_info.pickle', 'wb') as f:
