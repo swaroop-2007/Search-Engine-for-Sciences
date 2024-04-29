@@ -6,7 +6,7 @@ from string import punctuation
 import regex as re
 
 
-solr = pysolr.Solr('http://localhost:8983/solr/science_search_engine', always_commit=True)
+solr = pysolr.Solr('http://localhost:8983/solr/final', always_commit=True)
 
 
 non_stemmed_words = defaultdict(lambda: defaultdict(int))

@@ -5,8 +5,6 @@ from nltk.corpus import stopwords
 from string import punctuation
 import regex as re
 
-solr = pysolr.Solr('http://localhost:8983/solr/science_search_engine', always_commit=True)
-
 
 non_stemmed_words = defaultdict(lambda: defaultdict(int))
 
@@ -55,7 +53,7 @@ def expandQueryMC(query, resultSet, orginalQuery):
     for result in resultSet:
         # Convert the list of URLs to a string
         url = ' '.join(result['url'])
-        doc_tokens = tokenize_and_stem(' '.join(result['text']))  # Access 'text' field instead of 'meta_info'
+        doc_tokens = tokenize_and_stem(' '.join(result['content']))  # Access 'text' field instead of 'meta_info'
         doc_dict[url] = doc_tokens
         tokens.extend(doc_tokens)
 
@@ -74,13 +72,3 @@ def expandQueryMC(query, resultSet, orginalQuery):
     for stem in wordpunct_tokenize(query[len(orginalQuery):]):
         ans += ' ' + most_frequent_tokens[stem]
     return ans
-
-query = 'Computer Science'
-
-docs = solr.search(f'text:{query}', rows=30)
-
-
-new_query = expandQueryMC(query, docs, query)
-print(new_query)
-
-docs1 = solr.search(new_query, rows=30)

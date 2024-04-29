@@ -6,9 +6,6 @@ from string import punctuation
 import regex as re
 import numpy as np
 
-
-solr = pysolr.Solr('http://localhost:8983/solr/science_search_engine', always_commit=True)
-
 non_stemmed_words = defaultdict(lambda: defaultdict(int))
 
 def tokenize_and_stem(text):
@@ -101,13 +98,3 @@ def expandQuerySC(query, resultSet, originalQuery):
         ans += ' ' + most_frequent_tokens[stem]
     
     return ans
-
-
-query = 'Computer Science'
-
-docs = solr.search(f'text:{query}', rows=30)
-
-
-new_query = expandQuerySC(query, docs, query)
-print(new_query)
-
