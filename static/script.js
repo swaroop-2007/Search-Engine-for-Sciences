@@ -1,7 +1,3 @@
-/**
- * @author Sasipreetam Morsa
- */
- 
 var BASE_URL = "http://127.0.0.1:5000/api/v1/indexer"
 var data = [];
 
@@ -38,7 +34,8 @@ function search() {
     var page_rank = document.getElementById("page_rank").checked;
     var hits = document.getElementById("hits").checked;
     var flat_clustering = document.getElementById("flat_clustering").checked;
-    var hierarchical_clustering = document.getElementById("hierarchical_clustering").checked;
+    var singlelink_clustering = document.getElementById("singlelink_clustering").checked;
+    var completelink_clustering = document.getElementById("completelink_clustering").checked;
     var association_qe = document.getElementById("association_qe").checked;
     var metric_qe = document.getElementById("metric_qe").checked;
     var scalar_qe = document.getElementById("scalar_qe").checked;
@@ -53,8 +50,11 @@ function search() {
     else if (flat_clustering) {
         type = "flat_clustering";
     }
-    else if (hierarchical_clustering) {
-        type = "hierarchical_clustering";
+    else if (singlelink_clustering) {
+        type = "singlelink_clustering";
+    }
+    else if (completelink_clustering) {
+        type = "completelink_clustering";
     }
     else if (association_qe) {
         type ="association_qe";
@@ -66,16 +66,56 @@ function search() {
         type ="scalar_qe";
     }
     
-    
-    $.get( BASE_URL, {"query": input, "type": type})
-    
-    .done(function(resp) {
-        data = resp
-        customEngine(input);
+    // Check if query expansion option is selected
+    if (association_qe || metric_qe || scalar_qe) {
+        // Send request to server for query expansion
+        $.get(BASE_URL, {"query": input, "type": type})
+        .done(function(resp) {
+            data = resp;
+            customEngine(input);
+            
+            var expandedQuery = resp[20];
+            console.log(expandedQuery);
 
-    })
-    .fail(function(e) {
-        
-        console.log("error", e)
-    })
+            // Display query expansion result
+            //var expandedQuery = resp.map(function(result) {
+            //    return result.title; // Assuming 'title' is the relevant property of the query expansion result
+            //}).join(' ');
+            //console.log(result)
+            var queryExpansionOutput = document.getElementById("query-expansion-output");
+            queryExpansionOutput.innerHTML = expandedQuery;
+            var queryExpansionResult = document.getElementById("query-expansion-result");
+            queryExpansionResult.style.display = "block";
+        })
+        .fail(function(e) {
+            console.log("error", e);
+        });
+    } else {
+        // If no query expansion option selected, proceed with regular search
+        $.get(BASE_URL, {"query": input, "type": type})
+        .done(function(resp) {
+            data = resp;
+            customEngine(input);
+        })
+        .fail(function(e) {
+            console.log("error", e);
+        });
+    }
+}
+
+
+function showQueryExpansion() {
+    var resultDiv = document.getElementById("query-expansion-result");
+    var output = document.getElementById("query-expansion-output");
+    var radioButtons = document.getElementsByName("query-expansion");
+    
+    for (var i = 0; i < radioButtons.length; i++) {
+        if (radioButtons[i].checked) {
+            resultDiv.style.display = "block";
+            output.innerHTML = "Query Expansion: " + radioButtons[i].value;
+            return;
+        }
+    }
+    
+    resultDiv.style.display = "none";
 }

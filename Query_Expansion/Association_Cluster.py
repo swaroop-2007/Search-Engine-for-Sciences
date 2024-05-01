@@ -5,6 +5,8 @@ from nltk.corpus import stopwords
 from string import punctuation
 import regex as re
 
+import nltk
+nltk.download('stopwords')
 
 non_stemmed_words = defaultdict(lambda: defaultdict(int))
 

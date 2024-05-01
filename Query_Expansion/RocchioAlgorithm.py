@@ -32,11 +32,11 @@ def expandQuery(query, resultSet, originalQuery):
     for stem in set(queryStems):
         query_vector[stem] = queryStems.count(stem)
     for result in resultSet[:20]:
-        doc_tokens = (tokenize_and_stem(' '.join(result['text'])))
+        doc_tokens = (tokenize_and_stem(' '.join(result['content'])))
         for stem in set(doc_tokens):
             query_vector[stem] += (beta * doc_tokens.count(stem))
     for result in resultSet[20:]:
-        doc_tokens = (tokenize_and_stem(' '.join(result['text'])))
+        doc_tokens = (tokenize_and_stem(' '.join(result['content'])))
         for stem in set(doc_tokens):
             query_vector[stem] -= (gamma * doc_tokens.count(stem))
     best = sorted(query_vector.items(), key=lambda item: item[1], reverse=True)[1:6]
@@ -52,10 +52,3 @@ def expandQuery(query, resultSet, originalQuery):
     for stem in wordpunct_tokenize(query[len(originalQuery):]):
         ans += ' ' + most_frequent_tokens[stem]
     return ans
-
-
-query = 'camp'
-docs = solr.search(f'text:{query}', rows=30)
-docs = list(solr.search(f'text:{query}', rows=30))
-new_query = expandQuery(query, docs, query)
-print(new_query)

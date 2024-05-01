@@ -78,7 +78,7 @@ def expandQuerySC(query, resultSet, originalQuery):
     doc_dict = {}
     queryStems = tokenize_and_stem(query)
     for result in resultSet:
-        doc_tokens = tokenize_and_stem(' '.join(result['text']))
+        doc_tokens = tokenize_and_stem(' '.join(result['content']))
         doc_dict[' '.join(result['url'])] = doc_tokens
         tokens.extend(doc_tokens)
     localVocab = list(set(tokens))

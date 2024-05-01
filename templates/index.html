@@ -12,14 +12,17 @@
     <script src="{{ url_for('static', filename='script.js')}}"></script>
     
       
-    <div>
-        <h1>Search Engine for Science</h1>
+    <div class='title'>
+    
+        <h1>&#129516; Science Search Engine &#128300;</h1>
     </div>
       
     <div>
+    
         <form id="form" onsubmit="return true;">
-            
+          <div class="search-bar">
             <input type="text" placeholder="Enter query here..." id="UserInput"><br/>
+          </div>
             
             <p id="relevance">Relevance Model Options:</p>
             <input type="radio" checked id="page_rank" name="type" value="page_rank">
@@ -30,8 +33,10 @@
             <p id="clustering">Clustering Options:</p>
             <input type="radio" id="flat_clustering" name="type" value="flat_clustering">
             <label id="flat_clustering_label" for="flat_clustering">Flat Clustering</label>
-            <input type="radio" id="hierarchical_clustering" name="type" value="hierarchical_clustering" class="margin">
-            <label id="hierarchical_clustering_label" for="hierarchical_clustering">Hierarchical Clustering</label><br>
+            <input type="radio" id="singlelink_clustering" name="type" value="singlelink_clustering">
+            <label id="singlelink_clustering_label" for="singlelink_clustering">Single Link Clustering</label><br>
+            <input type="radio" id="completelink_clustering" name="type" value="completelink_clustering">
+            <label id="completelink_clustering_label" for="completelink_clustering">Complete Link Clustering</label><br>
             <hr>
             <p id="queryexp">Query Expansion Option:</p>
             <input type="radio" id="association_qe" name="type" value="association_qe">
@@ -42,6 +47,10 @@
             <label id="scalar_qe_label" for="query_expansion">Scalar</label>
             <br/>
             <hr>
+            <div id="query-expansion-result" style="display: none;">
+              <h2>Query Expansion Result:</h2>
+              <p id="query-expansion-output"></p>
+          </div>
             <input id="srch" type="button" value="Search" onclick="search(); queryToGoogleBing(); return false;">
             <hr>
             
@@ -61,22 +70,29 @@
       
     <div>
         <iframe id="countries" width="90%" height="500"></iframe>
-    </div><br/><br/>
+    </div>
       
-    <hr style="height: 15px; border-width: 5px; color: gray; background-color: blue">
+    
       
-    <h2 style="color: dodgerblue">Google Search</h2>
+ 
+
+    <div class=search-engine-frame>
+      
+    
+    <div>
+      <h2 style="color: dodgerblue">Google Search</h2>
+      <p id="google-summary"></p>
+        <iframe id="google" src="https://www.google.com/search?igu=1&source=hp&ei=lheWXriYJ4PktQXN-LPgDA&q=" align= "left" height="512" width=90%></iframe>
+    </div>
+      
+  
       
     <div>
-        <iframe id="google" src="https://www.google.com/search?igu=1&source=hp&ei=lheWXriYJ4PktQXN-LPgDA&q=" width="90%" height="500"></iframe>
-    </div><br/><br/>
-      
-    <hr style="height: 15px; border-width: 5px; color: gray; background-color: forestgreen">
-      
-    <h2 style="color: brown">Bing Search</h2>
-      
-    <div>
-        <iframe id="bing" src="https://www.bing.com/search?q=" width="90%" height="500"></iframe>
+      <h2 style="color: forestgreen">Bing Search</h2>
+      <p id="bing-summary"></p> 
+        <iframe id="bing" src="https://www.bing.com/search?q=" height="512" width=100% align="right"></iframe>
+    </div>
+
     </div>
       
   </body>
