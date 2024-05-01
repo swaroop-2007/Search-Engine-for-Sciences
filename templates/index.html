@@ -21,16 +21,18 @@
     
         <form id="form" onsubmit="return true;">
           <div class="search-bar">
-            <input type="text" placeholder="Enter query here..." id="UserInput"><br/>
+            
+            <input type="text"  placeholder="Enter query here..." id="UserInput"> <br/>
+            
           </div>
             
-            <p id="relevance">Relevance Model Options:</p>
+            <p id="relevance"><b>Relevance Model Options: </b></p>
             <input type="radio" checked id="page_rank" name="type" value="page_rank">
             <label id="page_rank_label" for="page_rank">Page Rank</label>
             <input type="radio" id="hits" name="type" value="hits" class="margin">
             <label id="hits_label" for="hits">HITS</label><br/>
             <hr>
-            <p id="clustering">Clustering Options:</p>
+            <p id="clustering"><b>Clustering Options: </b> </p>
             <input type="radio" id="flat_clustering" name="type" value="flat_clustering">
             <label id="flat_clustering_label" for="flat_clustering">Flat Clustering</label>
             <input type="radio" id="singlelink_clustering" name="type" value="singlelink_clustering">
@@ -38,7 +40,7 @@
             <input type="radio" id="completelink_clustering" name="type" value="completelink_clustering">
             <label id="completelink_clustering_label" for="completelink_clustering">Complete Link Clustering</label><br>
             <hr>
-            <p id="queryexp">Query Expansion Option:</p>
+            <p id="queryexp"><b> Query Expansion Option: </b></p>
             <input type="radio" id="association_qe" name="type" value="association_qe">
             <label id="association_qe_label" for="association_qe">Association</label>
             <input type="radio" id="metric_qe" name="type" value="metric_qe">
